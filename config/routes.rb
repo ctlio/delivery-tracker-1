@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root to: "deliveries#index"
+ 
+
   # Routes for the Delivery resource:
-  
+  get("/", {:controller => "deliveries", :action => "index"})
   # CREATE
   post("/insert_delivery", { :controller => "deliveries", :action => "create" })
           

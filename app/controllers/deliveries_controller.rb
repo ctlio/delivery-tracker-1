@@ -5,6 +5,13 @@ class DeliveriesController < ApplicationController
     @list_of_deliveries = matching_deliveries.order({ :created_at => :desc })
 
     render({ :template => "deliveries/index" })
+
+    #if current_user != nil
+      #redirect_to("/users/sign_in")
+    #else
+      #render({ :template => "deliveries/index" })
+    #end
+
   end
 
   def show
@@ -25,9 +32,9 @@ class DeliveriesController < ApplicationController
 
     if the_delivery.valid?
       the_delivery.save
-      redirect_to("/deliveries", { :notice => "Delivery created successfully." })
+      redirect_to("/", { :notice => "Added to list" })
     else
-      redirect_to("/deliveries", { :alert => the_delivery.errors.full_messages.to_sentence })
+      redirect_to("/", { :alert => the_delivery.errors.full_messages.to_sentence })
     end
   end
 
@@ -39,11 +46,12 @@ class DeliveriesController < ApplicationController
     the_delivery.supposed_to_arrive_on = params.fetch("query_supposed_to_arrive_on")
     the_delivery.details = params.fetch("query_details")
 
+
     if the_delivery.valid?
       the_delivery.save
-      redirect_to("/deliveries/#{the_delivery.id}", { :notice => "Delivery updated successfully."} )
+      redirect_to("/deliveries/", { :notice => "Marked as recieved"} )
     else
-      redirect_to("/deliveries/#{the_delivery.id}", { :alert => the_delivery.errors.full_messages.to_sentence })
+      redirect_to("/deliveries/", { :alert => the_delivery.errors.full_messages.to_sentence })
     end
   end
 
